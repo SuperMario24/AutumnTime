@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_helpyouself"
+        android:icon="@drawable/ic_shuffle_white_24dp"
+        android:title="随便看看"
+        app:showAsAction="always"
+        />
+</menu>
