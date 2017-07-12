@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--   Android 5.0 以上才能修改状态栏颜色，对应API21  所以新建values-v21 改主题  !-->
+<resources>
+    <style name="DisPlayActivityTheme" parent="AppTheme">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+</resources>

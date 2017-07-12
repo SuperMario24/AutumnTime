@@ -10,5 +10,10 @@ import java.util.List;
 
 public interface ZhihuNewsCallback {
 
+   /**
+    * 获取标题
+    * @param hotNews
+     */
    public void onZhihuNewsLoaded(List<HotNew> hotNews);
+
 }

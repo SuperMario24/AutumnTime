@@ -1,6 +1,7 @@
 package com.example.saber.autumntime.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
 import android.support.v7.widget.CardView;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.bumptech.glide.Glide;
+import com.example.saber.autumntime.Activity.DisPlayActivity;
 import com.example.saber.autumntime.Application.MyApplication;
 import com.example.saber.autumntime.R;
 import com.example.saber.autumntime.bean.HotNew;
@@ -23,11 +25,14 @@ import java.util.List;
  * Created by saber on 2017/3/20.
  */
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<HotNew> hotNews;
     private Context context;
     private ImageLoader imageLoader;
+
+    private static final int TYPE_NORMAL = 0;
+    private static final int TYPE_FOOTER = 1;
 
     public RecyclerAdapter(Context context,List<HotNew> hotNews) {
         this.context = context;
@@ -70,31 +75,67 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
 
     @Override
-    public RecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.list_item,parent,false);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        return new ViewHolder(view);
+        switch (viewType){
+            case TYPE_NORMAL:
+                View view = LayoutInflater.from(context).inflate(R.layout.list_item,parent,false);
+                final ViewHolder holder = new ViewHolder(view);
+
+                //recycleView的点击事件
+                holder.cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int position = holder.getAdapterPosition();
+                        //获取id
+                        int id = hotNews.get(position).getId();
+                        Intent intent = new Intent(context,DisPlayActivity.class);
+                        intent.putExtra("id",id);
+                        context.startActivity(intent);
+                    }
+                });
+                return holder;
+            case TYPE_FOOTER:
+                View view1 = LayoutInflater.from(context).inflate(R.layout.list_footer,parent,false);
+                FooterViewHolder footerViewHolder = new FooterViewHolder(view1);
+                return footerViewHolder;
+        }
+        return null;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if(holder instanceof ViewHolder){
+            HotNew hotNew = hotNews.get(position);
+            ((ViewHolder)holder).textView.setText(hotNew.getTitle());
+            Glide.with(context).load(hotNew.getImages().get(0)).into(((ViewHolder)holder).imageView);
 
-        HotNew hotNew = hotNews.get(position);
-        holder.textView.setText(hotNew.getTitle());
-        Glide.with(context).load(hotNew.getImages().get(0)).into(holder.imageView);
-
-        //eclipse中实现图片缓存的方法
-        //ImageLoader.ImageListener  listener = ImageLoader.getImageListener(holder.imageView,0,0);
-        //imageLoader.get(hotNew.getImages().get(0),listener);
-
+            //eclipse中实现图片缓存的方法
+            //ImageLoader.ImageListener  listener = ImageLoader.getImageListener(holder.imageView,0,0);
+            //imageLoader.get(hotNew.getImages().get(0),listener);
+        }
     }
+
 
     @Override
     public int getItemCount() {
-        return hotNews.size();
+        return hotNews.size()+1;
     }
 
-   static class ViewHolder extends RecyclerView.ViewHolder{
+    /**
+     * 显示RecyclerVIew底布局
+     * @param position
+     * @return
+     */
+    @Override
+    public int getItemViewType(int position) {
+        if(position == hotNews.size()){
+            return RecyclerAdapter.TYPE_FOOTER
+;        }
+        return RecyclerAdapter.TYPE_NORMAL;
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder{
        CardView cardView;
        TextView textView;
        ImageView imageView;
@@ -107,5 +148,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
    }
 
+    static class FooterViewHolder extends RecyclerView.ViewHolder{
+        public FooterViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
 
 }

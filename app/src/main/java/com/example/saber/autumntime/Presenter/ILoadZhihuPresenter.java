@@ -10,4 +10,14 @@ public interface ILoadZhihuPresenter {
      */
     public void loadZhihuNewsPresenter();
 
+    /**
+     * 获取知乎日报内容
+     */
+    public void loadZhihuContent(int id);
+
+    /**
+     * 获取知乎日报以前的新闻
+     * @param time
+     */
+    public void loadZhihuNewsBefore(long time);
 }

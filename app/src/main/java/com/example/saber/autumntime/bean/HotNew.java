@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by saber on 2017/3/20.
  */
 
-public class HotNew {
+public class HotNew{
 
     private ArrayList<String> images;
     private int type;
@@ -57,4 +57,11 @@ public class HotNew {
     public void setTitle(String title) {
         this.title = title;
     }
+
+
+
+
+
+
+
 }

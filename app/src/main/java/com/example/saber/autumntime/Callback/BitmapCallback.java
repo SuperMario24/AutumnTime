@@ -8,4 +8,5 @@ import android.graphics.Bitmap;
 
 public interface BitmapCallback {
     public void onBitmapLoaded(Bitmap bm);
+    public void onBitmapCompressed(Bitmap bm);
 }

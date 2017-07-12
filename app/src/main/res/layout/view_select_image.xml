@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+
+    >
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="拍摄"
+            android:textSize="16sp"
+            android:textColor="#555555"
+            android:gravity="center"
+            android:id="@+id/tv_take_photo"
+            android:background="#ffffff"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#aaaaaa"/>
+
+    <TextView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:text="从手机相册中选择"
+    android:textSize="16sp"
+    android:textColor="#555555"
+    android:gravity="center"
+        android:id="@+id/tv_select_photos"
+        android:background="#ffffff"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        />
+
+
+    <TextView
+        android:id="@+id/tv_cancel"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:text="取消"
+    android:textSize="16sp"
+    android:textColor="#555555"
+    android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:background="#ffffff"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+    />
+
+</LinearLayout>
