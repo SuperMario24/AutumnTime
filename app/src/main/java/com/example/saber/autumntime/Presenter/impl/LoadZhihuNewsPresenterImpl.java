@@ -69,7 +69,7 @@ public class LoadZhihuNewsPresenterImpl implements ILoadZhihuPresenter{
         model.loadZhihuNewsBefore(time, new ZhihuNewsCallback() {
             @Override
             public void onZhihuNewsLoaded(List<HotNew> hotNews) {
-                view.showZhihuNews(hotNews);
+                view.showBeforeZhihuNews(hotNews);
             }
         });
     }

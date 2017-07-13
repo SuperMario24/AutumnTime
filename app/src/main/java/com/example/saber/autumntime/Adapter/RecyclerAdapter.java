@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.example.saber.autumntime.Activity.DisPlayActivity;
 import com.example.saber.autumntime.Application.MyApplication;
 import com.example.saber.autumntime.R;
+import com.example.saber.autumntime.Utils.GlobalConsts;
 import com.example.saber.autumntime.bean.HotNew;
 
 import java.util.List;
@@ -91,6 +92,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         int id = hotNews.get(position).getId();
                         Intent intent = new Intent(context,DisPlayActivity.class);
                         intent.putExtra("id",id);
+                        intent.putExtra("type", GlobalConsts.TYPE_ZHIHU);
                         context.startActivity(intent);
                     }
                 });

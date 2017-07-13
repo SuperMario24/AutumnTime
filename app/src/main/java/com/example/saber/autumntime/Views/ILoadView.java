@@ -14,6 +14,12 @@ public interface ILoadView {
      * @param hotNews
      */
     public void showZhihuNews(List<HotNew> hotNews);
+
+    /**
+     * 显示前一天知乎新闻列表
+     * @param hotNews
+     */
+    public void showBeforeZhihuNews(List<HotNew> hotNews);
     
 
 }

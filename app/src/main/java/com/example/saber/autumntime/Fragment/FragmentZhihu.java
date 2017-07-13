@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,8 @@ import java.util.List;
  */
 
 public class FragmentZhihu extends Fragment implements ILoadView{
+
+    private static final String TAG = "FragmentZhihu";
 
     private RecyclerView recyclerView;
     private RecyclerAdapter recyclerAdapter;
@@ -139,19 +142,37 @@ public class FragmentZhihu extends Fragment implements ILoadView{
      */
     @Override
     public void showZhihuNews(List<HotNew> zhihuNews) {
+        Log.d(TAG,"Thread.currentThread().getId():"+Thread.currentThread().getId());
 
         if(recyclerAdapter == null){
             this.zhihuNews = zhihuNews;
             recyclerAdapter = new RecyclerAdapter(getContext(),this.zhihuNews);
             recyclerView.setAdapter(recyclerAdapter);
         }else {
+            this.zhihuNews.clear();
             this.zhihuNews.addAll(zhihuNews);
+            recyclerAdapter.notifyDataSetChanged();
+        }
+        refreshLayout.setRefreshing(false);
+
+    }
+    /**
+     * 下拉时获取到知乎日报前一天的数据
+     * @param hotNews
+     */
+    @Override
+    public void showBeforeZhihuNews(List<HotNew> hotNews) {
+        if(recyclerAdapter == null){
+            this.zhihuNews = hotNews;
+            recyclerAdapter = new RecyclerAdapter(getContext(),this.zhihuNews);
+            recyclerView.setAdapter(recyclerAdapter);
+        }else {
+            this.zhihuNews.addAll(hotNews);
             recyclerAdapter.notifyDataSetChanged();
             //减一天
             timeInMillis = timeInMillis - 24*60*60*1000;
-            refreshLayout.setRefreshing(false);
         }
-
+        refreshLayout.setRefreshing(false);
     }
 
 
