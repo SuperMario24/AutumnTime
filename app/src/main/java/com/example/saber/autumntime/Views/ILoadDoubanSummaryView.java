@@ -1,13 +1,16 @@
 package com.example.saber.autumntime.Views;
 
+import com.example.saber.autumntime.bean.DoubanSummaryResp;
+
 /**
- * Created by saber on 2017/7/13.
+ * Created by saber on 2017/7/31.
  */
 
-public interface ILoadGuokrContentView {
+public interface ILoadDoubanSummaryView {
 
-    public void onGuokrNewsContent(String data);
+    void onDoubanSummaryLoaded(DoubanSummaryResp doubanSummaryResp);
 
+    void onDoubanSummaryLoadedError();
     /**
      * 显示加载状态
      */
@@ -22,4 +25,5 @@ public interface ILoadGuokrContentView {
      * 加载失败
      */
     void onLoadedError();
+
 }

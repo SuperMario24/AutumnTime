@@ -16,4 +16,9 @@ public interface ZhihuNewsCallback {
      */
    public void onZhihuNewsLoaded(List<HotNew> hotNews);
 
+    /**
+     * 加载失败
+     */
+   void onZhihuNewsLoadedFailed();
+
 }

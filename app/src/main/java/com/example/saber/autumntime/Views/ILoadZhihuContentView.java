@@ -12,6 +12,21 @@ public interface ILoadZhihuContentView {
      * @param hotNewContent
      */
     public void showZhihuNewsContent(HotNewContent hotNewContent);
-    
+
+    /**
+     * 显示加载状态
+     */
+    void showLoading();
+
+    /**
+     * 加载成功
+     */
+    void onLoadedSuccess();
+
+    /**
+     * 加载失败
+     */
+    void onLoadedError();
+
 
 }

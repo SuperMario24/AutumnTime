@@ -63,7 +63,7 @@ public class LoadZhihuNewsModelImpl implements ILoadZhihuNewsModel{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.e("info", volleyError.getMessage());
+                callback.onZhihuNewsLoadedFailed();
             }
 
         });
@@ -96,7 +96,7 @@ public class LoadZhihuNewsModelImpl implements ILoadZhihuNewsModel{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.e("info", "onErrorResponse: "+volleyError.getMessage());
+                callback.onZhihuNewsContentLoadedError();
             }
 
          });
@@ -133,7 +133,7 @@ public class LoadZhihuNewsModelImpl implements ILoadZhihuNewsModel{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.e("info", "onErrorResponse: "+volleyError.getMessage());
+                callback.onZhihuNewsLoadedFailed();
             }
         });
 

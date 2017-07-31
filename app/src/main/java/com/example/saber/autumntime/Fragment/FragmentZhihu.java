@@ -2,6 +2,8 @@ package com.example.saber.autumntime.Fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -64,6 +66,9 @@ public class FragmentZhihu extends Fragment implements ILoadView{
 
         //接口以实现类的形式创建
         loadZhihuPresenter = new LoadZhihuNewsPresenterImpl(this);
+
+
+        //加载新闻
         loadZhihuPresenter.loadZhihuNewsPresenter();
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -153,7 +158,7 @@ public class FragmentZhihu extends Fragment implements ILoadView{
             this.zhihuNews.addAll(zhihuNews);
             recyclerAdapter.notifyDataSetChanged();
         }
-        refreshLayout.setRefreshing(false);
+        onLoadedSuccess();
 
     }
     /**
@@ -172,7 +177,34 @@ public class FragmentZhihu extends Fragment implements ILoadView{
             //减一天
             timeInMillis = timeInMillis - 24*60*60*1000;
         }
+        onLoadedSuccess();
+    }
+
+    //显示为加载状态
+    @Override
+    public void showLoading() {
+        refreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                refreshLayout.setRefreshing(true);
+            }
+        });
+    }
+    //加载成功
+    @Override
+    public void onLoadedSuccess() {
         refreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onLoadedError() {
+        Snackbar.make((FloatingActionButton)(getActivity().findViewById(R.id.fab)),"加载失败",Snackbar.LENGTH_INDEFINITE)
+                .setAction("重试", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        loadZhihuPresenter.loadZhihuNewsPresenter();
+                    }
+                }).show();
     }
 
 

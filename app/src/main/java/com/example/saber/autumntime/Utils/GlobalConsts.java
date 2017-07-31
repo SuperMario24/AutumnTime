@@ -21,6 +21,14 @@ public class GlobalConsts {
     public static final String GUOKR_ARTICLES = "http://apis.guokr.com/handpick/article.json?retrieve_type=by_since&category=all&limit=25&ad=1";
     //果壳精选内容
     public static final String GUOKR_CONTENT_URL = "http://jingxuan.guokr.com/pick/";
+    // 豆瓣一刻
+    // 根据日期查询消息列表
+    // eg:https://moment.douban.com/api/stream/date/2016-08-11
+    public static final String DOUBAN_MOMENT_URL = "https://moment.douban.com/api/stream/date/";
+
+    // 获取文章具体内容
+    // eg:https://moment.douban.com/api/post/100484
+    public static final String DOUBAN_ARTICLE_DETAIL = "https://moment.douban.com/api/post/";
 
     //新闻类型0-知乎，1-果壳，2-豆瓣
     public static final int TYPE_ZHIHU = 0;

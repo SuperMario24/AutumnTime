@@ -5,13 +5,16 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -41,6 +44,7 @@ public class DisPlayActivity extends AppCompatActivity implements ILoadZhihuCont
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private ImageView ivTitle;
     private WebView webView;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private NestedScrollView nestedScrollView;
     private ILoadZhihuPresenter loadZhihuNewsContentPresenter;
     private ILoadGuokrPresenter loadGuokrNewsContentPresenter;
@@ -75,6 +79,7 @@ public class DisPlayActivity extends AppCompatActivity implements ILoadZhihuCont
 
         initViews();
 
+
         if(type == 0){
             loadZhihuNewsContentPresenter = new LoadZhihuNewsPresenterImpl(this);
             loadZhihuNewsContentPresenter.loadZhihuContent(id);
@@ -90,6 +95,8 @@ public class DisPlayActivity extends AppCompatActivity implements ILoadZhihuCont
      * 初始化
      */
     private void initViews() {
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         nestedScrollView = (NestedScrollView) findViewById(R.id.scroll_view);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
@@ -120,7 +127,41 @@ public class DisPlayActivity extends AppCompatActivity implements ILoadZhihuCont
         Log.d("info", "showZhihuNewsContent: "+hotNewContent.toString());
 
         showContent(hotNewContent.getBody(),hotNewContent.getImage(),hotNewContent.getTitle());
+        onLoadedSuccess();
+    }
+    @Override
+    public void showLoading() {
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+            }
+        });
+    }
 
+    @Override
+    public void onLoadedSuccess() {
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+
+    @Override
+    public void onLoadedError() {
+        Snackbar.make(swipeRefreshLayout,"加载失败",Snackbar.LENGTH_INDEFINITE)
+                .setAction("重试", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(type == 0){
+                            loadZhihuNewsContentPresenter.loadZhihuContent(id);
+                        }else if (type == 1){
+                            loadGuokrNewsContentPresenter.loadGuokrContent(id);
+                        }
+                    }
+                }).show();
     }
     /**
      *  webView显示详细内容
@@ -164,7 +205,7 @@ public class DisPlayActivity extends AppCompatActivity implements ILoadZhihuCont
 
         Message msg = Message.obtain(handler,1,data);
         handler.sendMessage(msg);
-
+        onLoadedSuccess();
 
     }
 

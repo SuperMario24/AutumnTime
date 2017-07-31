@@ -39,11 +39,19 @@ public class LoadZhihuNewsPresenterImpl implements ILoadZhihuPresenter{
      */
     @Override
     public void loadZhihuNewsPresenter() {
+        //显示加载中
+        view.showLoading();
         model.loadZhihuNewsModel(new ZhihuNewsCallback() {
 
             @Override
             public void onZhihuNewsLoaded(List<HotNew> hotNews) {
                 view.showZhihuNews(hotNews);
+            }
+
+            @Override
+            public void onZhihuNewsLoadedFailed() {
+                //加载失败
+                view.onLoadedError();
             }
 
         });
@@ -54,10 +62,16 @@ public class LoadZhihuNewsPresenterImpl implements ILoadZhihuPresenter{
      */
     @Override
     public void loadZhihuContent(int id) {
+        displayView.showLoading();
         model.loadZhihuNewsContent(id, new ZhihuNewsContentCallback() {
             @Override
             public void onZhihuNewsContentLoaded(HotNewContent hotNewContent) {
                 displayView.showZhihuNewsContent(hotNewContent);
+            }
+
+            @Override
+            public void onZhihuNewsContentLoadedError() {
+                displayView.onLoadedError();
             }
         });
     }
@@ -70,6 +84,11 @@ public class LoadZhihuNewsPresenterImpl implements ILoadZhihuPresenter{
             @Override
             public void onZhihuNewsLoaded(List<HotNew> hotNews) {
                 view.showBeforeZhihuNews(hotNews);
+            }
+
+            @Override
+            public void onZhihuNewsLoadedFailed() {
+                view.onLoadedError();
             }
         });
     }
